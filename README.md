@@ -1,2 +1,2 @@
-# printful
+# Printful
 Printful Shipping Rate API
