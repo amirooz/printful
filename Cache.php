@@ -4,22 +4,26 @@ require 'CacheInterface.php';
 // use Printful\CacheInterface;
 
 class Cache implements CacheInterface {
-  public function set(string $key, $value, $duration)
+
+  // $memcache = new Memcache;
+  // $memcache->connect('127.0.0.1', 11211) or die ("Unable to connect to Memcached");
+
+  public function set(string $key, $value,int $duration)
   {
-    apc_store($key, $value, $duration);
+    // apc_store($key, $value, $duration);
+    $memcache = new Memcache;
+    $memcache->connect('127.0.0.1', 11211) or die ("Unable to connect to Memcached");
+    $memcache->set($key, $value, false, 300);
   }
 
   public function get(string $key)
   {
-       $data = apc_fetch($key);
-       if($data)
-       {
-         return $data;
-       }
+    $memcache = new Memcache;
+    $memcache->connect('127.0.0.1', 11211) or die ("Unable to connect to Memcached");
+    $data = $memcache->get($key);
+    return $data;
+     // $data = apc_fetch($key);
   }
 }
 
-$cache = new Cache();
-$cg = $cache->get('shiprate');
-print_r($cg);
 ?>
