@@ -51,6 +51,7 @@ class ShipRate
 
    $shipMethod = $response->getBody()->getContents();
    $this->cache->set('shiprate',$shipMethod,300);
+
   }
 
   public function get()
